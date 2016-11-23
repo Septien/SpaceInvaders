@@ -1,8 +1,20 @@
 final int moveOne = 1;
 final int moveTwo = 2;
-int n, m;
-int[][] m1;
-int[][] m2;
+
+String readNextLine(BufferedReader reader) {
+  String line;
+  try {
+    line = reader.readLine();
+  }
+  catch(IOException e) {
+    e.printStackTrace();
+    line = null;
+  }
+  
+  return line;
+}
+
+
 
 class Martian {
   private int[][] move1;
@@ -13,21 +25,51 @@ class Martian {
   private int m;
   private int gridSize; 
   
-  Martian(int N, int M, int[][] m1, int[][] m2, int gS) {
-    n = N;
-    m = M;
-    move1 = m1;
-    move2 = m2;
-    movement = moveOne;
+  Martian(String martianFile, int gS) {
+    loadMartianMatrix(martianFile);
     alive = true;
     gridSize = gS;
   }
   
-  boolean isAlive() {
+  private void loadMartianMatrix(String martian) {
+    BufferedReader reader;
+    String line;
+    String[] l;
+    int i, j;
+  
+    reader = createReader(martian);
+    line = readNextLine(reader);
+    if (line != null) {
+      l = split(line, " ");
+      n = int(l[0]);
+      m = int(l[1]);
+      move1 = new int[n][m];
+      move2 = new int[n][m];
+      for (i = 0; i < n; i++) {
+        line = readNextLine(reader);
+        if (line != null) {
+          l = split(line, " "); 
+          for (j = 0; j < m; j++)
+            move1[i][j] = int(l[j]);
+        }
+      }
+      line = readNextLine(reader);
+      for (i = 0; i < n; i++) {
+        line = readNextLine(reader);
+        if (line != null) {
+          l = split(line, " "); 
+          for (j = 0; j < m; j++)
+            move2[i][j] = int(l[j]);
+        }
+      }
+    }
+  }
+  
+  public boolean isAlive() {
     return alive;
   }
   
-  void drawMartian() {
+  public void drawMartian() {
     int i, j;
     if (movement == moveOne) {
       for (i = 0; i < n; i++)
@@ -52,63 +94,10 @@ class Martian {
   }
 }
 
-String readNextLine(BufferedReader reader) {
-  String line;
-  try {
-    line = reader.readLine();
-  }
-  catch(IOException e) {
-    e.printStackTrace();
-    line = null;
-  }
-  
-  return line;
-}
-
-void loadMartianMatrix(String martian) {
-  BufferedReader reader;
-  String line;
-  String[] l;
-  int i, j;
-  
-  reader = createReader(martian);
-  line = readNextLine(reader);
-  if (line != null) {
-    l = split(line, " ");
-    n = int(l[0]);
-    m = int(l[1]);
-    m1 = new int[n][m];
-    m2 = new int[n][m];
-    for (i = 0; i < n; i++) {
-      line = readNextLine(reader);
-      if (line != null) {
-        l = split(line, " "); 
-        for (j = 0; j < m; j++)
-          m1[i][j] = int(l[j]);
-      }
-    }
-    line = readNextLine(reader);
-    for (i = 0; i < n; i++) {
-      line = readNextLine(reader);
-      if (line != null) {
-        l = split(line, " "); 
-        for (j = 0; j < m; j++)
-          m2[i][j] = int(l[j]);
-      }
-    }
-  }
-}
-
 void setup() {
   background(0);
-  size(1000, 650);
+  size(600, 480);
   
-  loadMartianMatrix("martians/martian1.txt");
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++)
-      print(m2[i][j] + " ");
-    print("\n");
-  }
 }
 
 
