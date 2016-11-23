@@ -62,6 +62,42 @@ String readNextLine(BufferedReader reader) {
   return line;
 }
 
-void setup() {
+void loadMartianMatrix(String martian, int[][] m1, int[][] m2) {
+  BufferedReader reader;
+  String line;
+  String[] l;
+  int n, m;
+  int i, j;
+  
+  reader = createReader(martian);
+  line = readNextLine(reader);
+  if (line != null) {
+    l = split(line, " ");
+    n = int(l[0]);
+    m = int(l[1]);
+    m1 = new int[n][m];
+    m2 = new int[n][m];
+    for (i = 0; i < m; i++) {
+      line = readNextLine(reader);
+      if (line != null) {
+        l = split(line, " "); 
+        for (j = 0; j < n; j++)
+          m1[j][i] = int(l[j]);
+      }
+    }
+    line = readNextLine(reader);
+    for (i = 0; i < m; i++) {
+      line = readNextLine(reader);
+      if (line != null) {
+        l = split(line, " "); 
+        for (j = 0; j < n; j++)
+          m2[j][i] = int(l[j]);
+      }
+    }
+  }
+}
 
+void setup() {
+  background(0);
+  size(1000, 800);
 }
