@@ -1,5 +1,8 @@
 final int moveOne = 1;
 final int moveTwo = 2;
+int n, m;
+int[][] m1;
+int[][] m2;
 
 class Martian {
   private int[][] move1;
@@ -62,11 +65,10 @@ String readNextLine(BufferedReader reader) {
   return line;
 }
 
-void loadMartianMatrix(String martian, int[][] m1, int[][] m2) {
+void loadMartianMatrix(String martian) {
   BufferedReader reader;
   String line;
   String[] l;
-  int n, m;
   int i, j;
   
   reader = createReader(martian);
@@ -77,21 +79,21 @@ void loadMartianMatrix(String martian, int[][] m1, int[][] m2) {
     m = int(l[1]);
     m1 = new int[n][m];
     m2 = new int[n][m];
-    for (i = 0; i < m; i++) {
+    for (i = 0; i < n; i++) {
       line = readNextLine(reader);
       if (line != null) {
         l = split(line, " "); 
-        for (j = 0; j < n; j++)
-          m1[j][i] = int(l[j]);
+        for (j = 0; j < m; j++)
+          m1[i][j] = int(l[j]);
       }
     }
     line = readNextLine(reader);
-    for (i = 0; i < m; i++) {
+    for (i = 0; i < n; i++) {
       line = readNextLine(reader);
       if (line != null) {
         l = split(line, " "); 
-        for (j = 0; j < n; j++)
-          m2[j][i] = int(l[j]);
+        for (j = 0; j < m; j++)
+          m2[i][j] = int(l[j]);
       }
     }
   }
@@ -99,5 +101,17 @@ void loadMartianMatrix(String martian, int[][] m1, int[][] m2) {
 
 void setup() {
   background(0);
-  size(1000, 800);
+  size(1000, 650);
+  
+  loadMartianMatrix("martians/martian1.txt");
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++)
+      print(m2[i][j] + " ");
+    print("\n");
+  }
+}
+
+
+void draw() {
+
 }
