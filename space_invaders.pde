@@ -119,6 +119,14 @@ void setup() {
   int gridHeight;
   int gm = 160;
 
+  noFill();
+  stroke(255);
+  gridWidth = width/gn;
+  gridHeight = height/gm;
+  for (int i = 0; i < width; i += width/gn)
+    for ( int j = 0; j < height; j += height/gm)
+      rect(i, j, width/gn, height/gm);
+
   
 }
 
