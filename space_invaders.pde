@@ -1,3 +1,5 @@
+final int moveOne = 1;
+final int moveTwo = 2;
 
 class Martian {
   private int[][] move1;
