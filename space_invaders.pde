@@ -112,6 +112,13 @@ class Martian {
 void setup() {
   background(0);
   size(600, 480);
+  //Width of grid
+  int gridWidth;
+  int gn = 160;
+  //Height of grid
+  int gridHeight;
+  int gm = 160;
+
   
 }
 
