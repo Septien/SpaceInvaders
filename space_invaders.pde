@@ -48,3 +48,20 @@ class Martian {
     alive = false;
   }
 }
+
+String readNextLine(BufferedReader reader) {
+  String line;
+  try {
+    line = reader.readLine();
+  }
+  catch(IOException e) {
+    e.printStackTrace();
+    line = null;
+  }
+  
+  return line;
+}
+
+void setup() {
+
+}
