@@ -14,21 +14,27 @@ String readNextLine(BufferedReader reader) {
   return line;
 }
 
-
-
 class Martian {
+  //States of the martian (position 1 or position 2)
   private int[][] move1;
   private int[][] move2;
+  //Appears on the board
   private boolean alive;
+  //In wich movement is the martian now
   private int movement;
+  //Size of the matrix
   private int n;
   private int m;
-  private int gridSize; 
+  //Size of each square
+  private int gridSizeX;
+  private int gridSizeY;
   
-  Martian(String martianFile, int gS) {
+  Martian(String martianFile, int gSx, int gSy) {
     loadMartianMatrix(martianFile);
     alive = true;
-    gridSize = gS;
+    gridSizeX = gSx;
+    gridSizeY = gSy;
+    movement = moveOne;
   }
   
   private void loadMartianMatrix(String martian) {
@@ -70,25 +76,34 @@ class Martian {
   }
   
   public void drawMartian() {
+    if (!alive)
+      return;
+      
     int i, j;
+    fill(0, 255, 0);
     if (movement == moveOne) {
-      for (i = 0; i < n; i++)
+      for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++) {
-          if (move1[i][j] == 1)
-            rect(n*i, m*j, gridSize, gridSize);
+          if (move1[i][j] == 1) {
+            rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
+          }
         }
-        movement = moveTwo;
+      }
+      movement = moveTwo;
     }
     else {
-      for (i = 0; i < n; i++)
+      for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++) {
-          if (move2[i][j] == 1)
-            rect(n*i, m*j, gridSize, gridSize);
+          if (move2[i][j] == 1) {
+            rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
+          }
         }
+      }
       movement = moveOne;
     }
   }
   
+  //Kill martian, no longer on screen
   public void kill() {
     alive = false;
   }
