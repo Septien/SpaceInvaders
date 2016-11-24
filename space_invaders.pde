@@ -17,6 +17,17 @@ String readNextLine(BufferedReader reader) {
   return line;
 }
 
+void drawMatrix(int[][] matrix, int n, int m, int gridSizeX, int gridSizeY) {
+  int i, j;
+  for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+          if (matrix[i][j] == 1) {
+            rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
+          }
+        }
+      }
+}
+
 class Martian {
   //States of the martian (position 1 or position 2)
   private int[][] move1;
@@ -83,27 +94,14 @@ class Martian {
   public void drawMartian() {
     if (!alive)
       return;
-      
-    int i, j;
+
     fill(c);
     if (movement == moveOne) {
-      for (i = 0; i < n; i++) {
-        for (j = 0; j < m; j++) {
-          if (move2[i][j] == 1) {
-            rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
-          }
-        }
-      }
+      drawMatrix(move1, n, m, gridSizeX, gridSizeY);
       movement = moveTwo;
     }
     else {
-      for (i = 0; i < n; i++) {
-        for (j = 0; j < m; j++) {
-          if (move2[i][j] == 1) {
-            rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
-          }
-        }
-      }
+      drawMatrix(move2, n, m, gridSizeX, gridSizeY);
       movement = moveOne;
     }
   }
@@ -156,12 +154,8 @@ class Saucer {
   }
   
   public void drawSaucer() {
-    int i, j;
     fill(c);
-    for (i = 0; i < n; i++)
-      for (j = 0; j < m; j++)
-        if (saucer[i][j] == 1)
-          rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
+    drawMatrix(saucer, n, m, gridSizeX, gridSizeY);
   }
 }
 
@@ -185,7 +179,6 @@ void setup() {
   s = new Saucer("martians/saucer.txt", gridWidth, gridHeight);
   s.drawSaucer();
 }
-
 
 void draw() {
 
