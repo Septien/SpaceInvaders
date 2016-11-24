@@ -315,23 +315,77 @@ class Cannon {
   }
 }
 
+//Necesary objects and variables.
+Martian[][] martians;
+Saucer saucer;
+Barrack[] barracks;
+Cannon cannon;
+//Number of squares on x-axis
+int gn = 200;
+//Number of squares on y-axis
+int gm = 200;
+//Number of columns and rows of martians
+int martianRow = 5;
+int martianColumn = 11;
+//Number of barracks
+int numBarracks = 4;
+
+/**
+Initialize the array of martians.
+Load all pertinent data.
+*/
+void initializeMartians(int gridWidth, int gridHeight) {
+  int i, j;
+  
+  martians = new Martian[martianRow][martianColumn];
+  for (i = 0; i < martianRow; i++) {
+    for (j = 0; j < martianColumn; j++) {
+      switch (i) {
+        //Load martians number 3
+        case 0:
+          martians[i][j] = new Martian("martians/martian3.txt", gridWidth, gridHeight);
+          break;
+        //Load the martian number 2
+        case 1:
+        case 2:
+          martians[i][j] = new Martian("martians/martian2.txt", gridWidth, gridHeight);
+          break;
+        //Load martian number 1
+        case 3:
+        case 4:
+          martians[i][j] = new Martian("martians/martian1.txt", gridWidth, gridHeight);
+          break;
+      }
+    }
+  }
+}
+
 void setup() {
-  background(0);
+  int i;
+  background(black);
   size(600, 600);
   
   //Width of grid
   int gridWidth;
-  //Number of squares on x-axis
-  int gn = 200;
   //Height of grid
   int gridHeight;
-  //Number of squares on y-axis
-  int gm = 200;
   
   gridWidth = width/gn;
   gridHeight = height/gm;
   
-  Cannon cannon;
+  //Initialize martians
+  initializeMartians(gridWidth, gridHeight);
+  
+  //Initialize saucer
+  saucer = new Saucer("martians/saucer.txt", gridWidth, gridHeight);
+  
+  //Initialize barracks
+  barracks = new Barrack[numBarracks];
+  for (i = 0; i < numBarracks; i++) {
+    barracks[i] = new Barrack("barracks/barrack.txt", gridWidth, gridHeight);
+  }
+  
+  //Initialize cannon
   cannon = new Cannon("cannon/cannon.txt", gridWidth, gridHeight);
   cannon.drawCannon();
 }
