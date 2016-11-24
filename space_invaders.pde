@@ -197,7 +197,61 @@ class Saucer {
   }
 }
 
-
+class Barrack {
+  private int[][] barrack;
+  private int n;
+  private int m;
+  private int damage;
+  private int gridSizeX;
+  private int gridSizeY;
+  private color c;
+  
+  Barrack(String file, int gSx, int gSy) {
+    loadBarrackMatrix(file);
+    gridSizeX = gSx;
+    gridSizeY = gSy;
+    //0% of damage
+    damage = 0;
+    c = green;
+  }
+  
+  private void loadBarrackMatrix(String barrackFile) {
+    BufferedReader reader;
+    String line;
+    String[] l;
+    int i, j;
+  
+    reader = createReader(barrackFile);
+    line = readNextLine(reader);
+    if (line != null) {
+      l = split(line, " ");
+      n = int(l[0]);
+      m = int(l[1]);
+      barrack = new int[n][m];
+      for (i = 0; i < n; i++) {
+        line = readNextLine(reader);
+        if (line != null) {
+          l = split(line, " "); 
+          for (j = 0; j < m; j++)
+            barrack[i][j] = int(l[j]);
+        }
+      }
+    }
+  }
+  
+  public void setColor(color nc) {
+    c = nc;
+  }
+  
+  public color getColor() {
+    return c;
+  }
+  
+  public void drawBarrack() {
+    fill(c);
+    drawMatrix(barrack, n, m, gridSizeX, gridSizeY);
+  }
+}
 
 void setup() {
   background(0);
@@ -215,9 +269,9 @@ void setup() {
   gridWidth = width/gn;
   gridHeight = height/gm;
   
-  Saucer s;
-  s = new Saucer("martians/saucer.txt", gridWidth, gridHeight);
-  s.drawSaucer();
+  Barrack barrack;
+  barrack = new Barrack("barracks/barrack.txt", gridWidth, gridHeight);
+  barrack.drawBarrack();
 }
 
 void draw() {
