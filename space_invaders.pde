@@ -1,5 +1,8 @@
 final int moveOne = 1;
 final int moveTwo = 2;
+final color green = color(0, 255, 0);
+final color white = color(255);
+final color black = color(0);
 
 String readNextLine(BufferedReader reader) {
   String line;
@@ -84,7 +87,7 @@ class Martian {
     if (movement == moveOne) {
       for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++) {
-          if (move1[i][j] == 1) {
+          if (move2[i][j] == 1) {
             rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
           }
         }
@@ -109,25 +112,60 @@ class Martian {
   }
 }
 
+class Saucer {
+  private int[][] saucer;
+  private int n;
+  private int m;
+  private int lives;
+  private int gridSizeX;
+  private int gridSizeY;
+  private color c;
+  
+  Saucer(String file, int gSx, int gSy) {
+    loadSaucerMatrix(file);
+    lives = 3;
+    gridSizeX = gSx;
+    gridSizeY = gSy;
+    c = green;
+  }
+  
+  private void loadSaucerMatrix(String suacer) {
+    BufferedReader reader;
+    String line;
+    String[] l;
+    int i, j;
+  
+    reader = createReader(suacer);
+    line = readNextLine(reader);
+    if (line != null) {
+      l = split(line, " ");
+      n = int(l[0]);
+      m = int(l[1]);
+      saucer = new int[n][m];
+      for (i = 0; i < n; i++) {
+        line = readNextLine(reader);
+        if (line != null) {
+          l = split(line, " "); 
+          for (j = 0; j < m; j++)
+            saucer[i][j] = int(l[j]);
+        }
+      }
+    }
+  }
+  
+  public void draw_saucer() {
+    int i, j;
+    fill(c);
+    for (i = 0; i < n; i++)
+      for (j = 0; j < m; j++)
+        if (saucer[i][j] == 1)
+          rect(gridSizeX*j, gridSizeY*i, gridSizeX, gridSizeY);
+  }
+}
+
 void setup() {
   background(0);
-  size(600, 480);
-  //Width of grid
-  int gridWidth;
-  int gn = 160;
-  //Height of grid
-  int gridHeight;
-  int gm = 160;
-
-  noFill();
-  stroke(255);
-  gridWidth = width/gn;
-  gridHeight = height/gm;
-  for (int i = 0; i < width; i += width/gn)
-    for ( int j = 0; j < height; j += height/gm)
-      rect(i, j, width/gn, height/gm);
-
-  
+  size(600, 600);
 }
 
 
