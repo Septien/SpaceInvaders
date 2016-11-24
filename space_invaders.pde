@@ -144,8 +144,6 @@ class Saucer {
   //Size of matrix
   private int n;
   private int m;
-  //Number of available lives
-  private int lives;
   private int gridSizeX;
   private int gridSizeY;
   //Color of saucer
@@ -153,7 +151,6 @@ class Saucer {
   
   Saucer(String file, int gSx, int gSy) {
     loadSaucerMatrix(file);
-    lives = 3;
     gridSizeX = gSx;
     gridSizeY = gSy;
     c = red;
@@ -257,7 +254,8 @@ class Cannon {
   private int[][] cannon;
   private int n;
   private int m;
-  private int damage;
+  //Number of available lives
+  private int lives;
   private int gridSizeX;
   private int gridSizeY;
   private color c;
@@ -267,7 +265,7 @@ class Cannon {
     gridSizeX = gSx;
     gridSizeY = gSy;
     //0% of damage
-    damage = 0;
+    lives = 3;
     c = green;
   }
   
