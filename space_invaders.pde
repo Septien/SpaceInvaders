@@ -117,6 +117,14 @@ class Martian {
     return alive;
   }
   
+  public int getN() {
+    return n;
+  }
+  
+  public int getM() {
+      return m;
+  }
+  
   public void drawMartian() {
     if (!alive)
       return;
@@ -333,6 +341,8 @@ int numBarracks = 4;
 int gridWidth;
 //Height of grid
 int gridHeight;
+//Initial points
+int initialCoordinate = 20;
 
 /**
 Initialize the array of martians.
@@ -399,6 +409,7 @@ void setup() {
   init();
 
   drawLine();
+  noLoop();
 }
 
 void draw() {
