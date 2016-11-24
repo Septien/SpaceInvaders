@@ -1,6 +1,7 @@
 final int moveOne = 1;
 final int moveTwo = 2;
 final color green = color(0, 255, 0);
+final color red = color(255, 0, 0);
 final color white = color(255);
 final color black = color(0);
 
@@ -155,7 +156,7 @@ class Saucer {
     lives = 3;
     gridSizeX = gSx;
     gridSizeY = gSy;
-    c = green;
+    c = red;
   }
   
   private void loadSaucerMatrix(String suacer) {
@@ -195,6 +196,8 @@ class Saucer {
     drawMatrix(saucer, n, m, gridSizeX, gridSizeY);
   }
 }
+
+
 
 void setup() {
   background(0);
