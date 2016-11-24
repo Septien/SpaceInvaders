@@ -31,6 +31,7 @@ class Martian {
   //Size of each square
   private int gridSizeX;
   private int gridSizeY;
+  private color c;
   
   Martian(String martianFile, int gSx, int gSy) {
     loadMartianMatrix(martianFile);
@@ -38,6 +39,7 @@ class Martian {
     gridSizeX = gSx;
     gridSizeY = gSy;
     movement = moveOne;
+    c = white;
   }
   
   private void loadMartianMatrix(String martian) {
@@ -83,7 +85,7 @@ class Martian {
       return;
       
     int i, j;
-    fill(0, 255, 0);
+    fill(c);
     if (movement == moveOne) {
       for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++) {
@@ -153,7 +155,7 @@ class Saucer {
     }
   }
   
-  public void draw_saucer() {
+  public void drawSaucer() {
     int i, j;
     fill(c);
     for (i = 0; i < n; i++)
@@ -166,6 +168,22 @@ class Saucer {
 void setup() {
   background(0);
   size(600, 600);
+  
+  //Width of grid
+  int gridWidth;
+  //Number of squares on x-axis
+  int gn = 200;
+  //Height of grid
+  int gridHeight;
+  //Number of squares on y-axis
+  int gm = 200;
+  
+  gridWidth = width/gn;
+  gridHeight = height/gm;
+  
+  Saucer s;
+  s = new Saucer("martians/saucer.txt", gridWidth, gridHeight);
+  s.drawSaucer();
 }
 
 
