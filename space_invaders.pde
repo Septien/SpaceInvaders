@@ -329,6 +329,10 @@ int martianRow = 5;
 int martianColumn = 11;
 //Number of barracks
 int numBarracks = 4;
+//Width of grid
+int gridWidth;
+//Height of grid
+int gridHeight;
 
 /**
 Initialize the array of martians.
@@ -360,19 +364,9 @@ void initializeMartians(int gridWidth, int gridHeight) {
   }
 }
 
-void setup() {
+//Initialize all necesary objects.
+void init() {
   int i;
-  background(black);
-  size(600, 600);
-  
-  //Width of grid
-  int gridWidth;
-  //Height of grid
-  int gridHeight;
-  
-  gridWidth = width/gn;
-  gridHeight = height/gm;
-  
   //Initialize martians
   initializeMartians(gridWidth, gridHeight);
   
@@ -388,6 +382,23 @@ void setup() {
   //Initialize cannon
   cannon = new Cannon("cannon/cannon.txt", gridWidth, gridHeight);
   cannon.drawCannon();
+}
+
+void drawLine() {
+  stroke(green);
+  line(0, (gm - 1) * gridHeight, width, (gm - 1) * gridHeight);
+}
+
+void setup() {
+  background(black);
+  size(600, 600);
+  
+  gridWidth = width/gn;
+  gridHeight = height/gm;
+  
+  init();
+
+  drawLine();
 }
 
 void draw() {
