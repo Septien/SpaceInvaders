@@ -4,6 +4,11 @@ final color green = color(0, 255, 0);
 final color white = color(255);
 final color black = color(0);
 
+/**
+  reader -> pointer to a file.
+  Read the next line of the input file.
+  Returns it.
+*/
 String readNextLine(BufferedReader reader) {
   String line;
   try {
@@ -17,6 +22,13 @@ String readNextLine(BufferedReader reader) {
   return line;
 }
 
+/**
+  Draws a matrix containing 0 and 1.
+  Draw a rectangle if the value of the matrix is one
+  Input: matrix -> matrix to look.
+  n,m -> size of the matrix
+  gridSizeX, gridSizeY -> width and height of the rectangle.
+*/
 void drawMatrix(int[][] matrix, int n, int m, int gridSizeX, int gridSizeY) {
   int i, j;
   for (i = 0; i < n; i++) {
@@ -59,23 +71,28 @@ class Martian {
     String[] l;
     int i, j;
   
+    //Open file
     reader = createReader(martian);
     line = readNextLine(reader);
     if (line != null) {
       l = split(line, " ");
+      //Size of the matrix
       n = int(l[0]);
       m = int(l[1]);
       move1 = new int[n][m];
       move2 = new int[n][m];
+      //Read first matrix
       for (i = 0; i < n; i++) {
         line = readNextLine(reader);
         if (line != null) {
-          l = split(line, " "); 
+          l = split(line, " ");
+          //Fill the matrix with the content of the current line
           for (j = 0; j < m; j++)
             move1[i][j] = int(l[j]);
         }
       }
       line = readNextLine(reader);
+      //Read next matrix
       for (i = 0; i < n; i++) {
         line = readNextLine(reader);
         if (line != null) {
@@ -85,6 +102,14 @@ class Martian {
         }
       }
     }
+  }
+  
+  public void setColor(color nc) {
+    c = nc;
+  }
+  
+  public color getColor() {
+    return c;
   }
   
   public boolean isAlive() {
@@ -113,12 +138,16 @@ class Martian {
 }
 
 class Saucer {
+  //Matrix of saucer
   private int[][] saucer;
+  //Size of matrix
   private int n;
   private int m;
+  //Number of available lives
   private int lives;
   private int gridSizeX;
   private int gridSizeY;
+  //Color of saucer
   private color c;
   
   Saucer(String file, int gSx, int gSy) {
@@ -151,6 +180,14 @@ class Saucer {
         }
       }
     }
+  }
+  
+  public void setColor(color nc) {
+    c = nc;
+  }
+  
+  public color getColor() {
+    return c;
   }
   
   public void drawSaucer() {
