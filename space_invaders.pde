@@ -144,6 +144,8 @@ class Saucer {
   //Size of matrix
   private int n;
   private int m;
+  //Array of posible points
+  private int[] points;
   private int gridSizeX;
   private int gridSizeY;
   //Color of saucer
@@ -154,6 +156,12 @@ class Saucer {
     gridSizeX = gSx;
     gridSizeY = gSy;
     c = red;
+    points = new int[4];
+    //Range of points 
+    points[0] = 50;
+    points[1] = 100;
+    points[2] = 150;
+    points[3] = 300;
   }
   
   private void loadSaucerMatrix(String suacer) {
