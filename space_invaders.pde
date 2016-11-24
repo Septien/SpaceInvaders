@@ -253,6 +253,62 @@ class Barrack {
   }
 }
 
+class Cannon {
+  private int[][] cannon;
+  private int n;
+  private int m;
+  private int damage;
+  private int gridSizeX;
+  private int gridSizeY;
+  private color c;
+  
+  Cannon(String file, int gSx, int gSy) {
+    loadBarrackMatrix(file);
+    gridSizeX = gSx;
+    gridSizeY = gSy;
+    //0% of damage
+    damage = 0;
+    c = green;
+  }
+  
+  private void loadBarrackMatrix(String barrackFile) {
+    BufferedReader reader;
+    String line;
+    String[] l;
+    int i, j;
+  
+    reader = createReader(barrackFile);
+    line = readNextLine(reader);
+    if (line != null) {
+      l = split(line, " ");
+      n = int(l[0]);
+      m = int(l[1]);
+      cannon = new int[n][m];
+      for (i = 0; i < n; i++) {
+        line = readNextLine(reader);
+        if (line != null) {
+          l = split(line, " "); 
+          for (j = 0; j < m; j++)
+            cannon[i][j] = int(l[j]);
+        }
+      }
+    }
+  }
+  
+  public void setColor(color nc) {
+    c = nc;
+  }
+  
+  public color getColor() {
+    return c;
+  }
+  
+  public void drawCannon() {
+    fill(c);
+    drawMatrix(cannon, n, m, gridSizeX, gridSizeY);
+  }
+}
+
 void setup() {
   background(0);
   size(600, 600);
@@ -269,9 +325,9 @@ void setup() {
   gridWidth = width/gn;
   gridHeight = height/gm;
   
-  Barrack barrack;
-  barrack = new Barrack("barracks/barrack.txt", gridWidth, gridHeight);
-  barrack.drawBarrack();
+  Cannon cannon;
+  cannon = new Cannon("cannon/cannon.txt", gridWidth, gridHeight);
+  cannon.drawCannon();
 }
 
 void draw() {
