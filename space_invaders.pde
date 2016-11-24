@@ -130,6 +130,7 @@ class Martian {
       return;
 
     fill(c);
+    noStroke();
     if (movement == moveOne) {
       drawMatrix(move1, n, m, gridSizeX, gridSizeY);
       movement = moveTwo;
@@ -391,7 +392,6 @@ void init() {
   
   //Initialize cannon
   cannon = new Cannon("cannon/cannon.txt", gridWidth, gridHeight);
-  cannon.drawCannon();
 }
 
 void drawLine() {
@@ -407,11 +407,29 @@ void setup() {
   gridHeight = height/gm;
   
   init();
+  
+  //noLoop();
+}
 
-  drawLine();
-  noLoop();
+void drawMartians() {
+  int i, j;
+  int n, m;
+  int stepY;
+  n = martians[0][0].getN();
+  m = martians[0][0].getM();
+  stepY = m + 5;
+  for (i = 0; i < martianRow; i++) {
+    for (j = 0; j < martianColumn; j++) {
+      pushMatrix();
+        translate(0, i * stepY * gridHeight);
+        translate((initialCoordinate + (m * j)) * gridWidth, initialCoordinate * gridHeight);
+        martians[i][j].drawMartian();
+      popMatrix();
+    }
+  }
 }
 
 void draw() {
-
+  drawMartians();
+  drawLine();
 }
