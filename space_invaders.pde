@@ -422,9 +422,11 @@ void drawMartians() {
   int i, j;
   int n, m;
   int stepY;
+  int martianSeparationHeight;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
-  stepY = m + 5;
+  martianSeparationHeight = 5;
+  stepY = m + martianSeparationHeight;
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
       pushMatrix();
