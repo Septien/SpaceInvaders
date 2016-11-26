@@ -416,6 +416,9 @@ void setup() {
   
   init();
   noLoop();
+  //Separate board area and information display area. For debugging
+  stroke(green);
+  line(0, 12 * gridHeight, width, 12 * gridHeight);
 }
 
 void drawMartians() {
