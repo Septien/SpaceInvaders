@@ -173,6 +173,14 @@ class Saucer {
     points[3] = 300;
   }
   
+  public int getN() {
+    return n;
+  }
+  
+  public int getM() {
+    return m;
+  }
+  
   private void loadSaucerMatrix(String suacer) {
     BufferedReader reader;
     String line;
@@ -407,8 +415,7 @@ void setup() {
   gridHeight = height/gm;
   
   init();
-  
-  //noLoop();
+  noLoop();
 }
 
 void drawMartians() {
