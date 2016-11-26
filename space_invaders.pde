@@ -425,12 +425,13 @@ void drawMartians() {
   int i, j;
   int n, m;
   int stepY;
-  int martianSeparationHeight;
+  int martianInitialHeight;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
-  martianSeparationHeight = 5;
+  martianInitialHeight = 6;
   //Calculate height of the first line of martians
-  stepY = m + martianSeparationHeight;
+  stepY = n + martianInitialHeight;
+  print(stepY);
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
       pushMatrix();
