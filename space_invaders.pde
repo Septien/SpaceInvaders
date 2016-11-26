@@ -123,7 +123,7 @@ class Martian {
       return m;
   }
   
-  public void setMovement(boolean move) {
+  public void setMove(boolean move) {
     moveOne = move;
   }
   
@@ -447,13 +447,17 @@ void drawMartians() {
   int n, m;
   int stepY;
   int martianInitialHeight;
+  int millis;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianInitialHeight = 6;
+  millis = millis() % 1000;
   //Calculate height of the first line of martians
   stepY = n + martianInitialHeight;
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
+      if (millis >= 0 && millis <= 15)
+        martians[i][j].setMove(!martians[i][j].getMove());
       pushMatrix();
         //Draw each line of martians according to the line they belong to.
         translate(0, i * stepY * gridHeight);
