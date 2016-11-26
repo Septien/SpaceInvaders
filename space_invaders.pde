@@ -351,7 +351,7 @@ int gridWidth;
 //Height of grid
 int gridHeight;
 //Initial points
-int initialCoordinate = 20;
+int initialCoordinate = 23;
 
 /**
 Initialize the array of martians.
