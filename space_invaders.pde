@@ -286,7 +286,7 @@ class Cannon {
   private color c;
   
   Cannon(String file, int gSx, int gSy) {
-    loadBarrackMatrix(file);
+    loadCannonMatrix(file);
     gridSizeX = gSx;
     gridSizeY = gSy;
     //0% of damage
@@ -294,7 +294,7 @@ class Cannon {
     c = green;
   }
   
-  private void loadBarrackMatrix(String barrackFile) {
+  private void loadCannonMatrix(String barrackFile) {
     BufferedReader reader;
     String line;
     String[] l;
@@ -426,11 +426,14 @@ void drawMartians() {
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianSeparationHeight = 5;
+  //Calculate height of the first line of martians
   stepY = m + martianSeparationHeight;
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
       pushMatrix();
+        //Draw each line of martians according to the line they belong to.
         translate(0, i * stepY * gridHeight);
+        //Draw each martian of a line with its corresponding separation
         translate((initialCoordinate + (m * j)) * gridWidth, initialCoordinate * gridHeight);
         martians[i][j].drawMartian();
       popMatrix();
