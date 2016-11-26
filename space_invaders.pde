@@ -127,6 +127,10 @@ class Martian {
     moveOne = move;
   }
   
+  public boolean getMove() {
+    return moveOne;
+  }
+  
   public void drawMartian() {
     if (!alive)
       return;
