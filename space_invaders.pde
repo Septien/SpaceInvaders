@@ -368,6 +368,9 @@ int gridWidth;
 int gridHeight;
 //Initial points
 int initialCoordinate = 23;
+//Cannon translate coordinate
+int cannonTranslate = 0;
+
 
 /**
 Initialize the array of martians.
@@ -494,7 +497,7 @@ void drawCannon() {
   int cannonInitialHeight;
   cannonInitialHeight = 180;
   pushMatrix();
-    translate((initialCoordinate) * gridWidth, cannonInitialHeight * gridHeight);
+    translate((initialCoordinate + cannonTranslate) * gridWidth, cannonInitialHeight * gridHeight);
     cannon.drawCannon();
   popMatrix();
 }
