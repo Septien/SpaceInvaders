@@ -125,20 +125,20 @@ class Martian {
       return m;
   }
   
+  public void setMovement(int move) {
+    movement = move;
+  }
+  
   public void drawMartian() {
     if (!alive)
       return;
 
     fill(c);
     noStroke();
-    if (movement == moveOne) {
+    if (movement == moveOne)
       drawMatrix(move1, n, m, gridSizeX, gridSizeY);
-      movement = moveTwo;
-    }
-    else {
+    else
       drawMatrix(move2, n, m, gridSizeX, gridSizeY);
-      movement = moveOne;
-    }
   }
   
   //Kill martian, no longer on screen
