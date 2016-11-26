@@ -326,6 +326,14 @@ class Cannon {
     }
   }
   
+  public int getM() {
+    return m;
+  }
+  
+  public int getN() {
+    return n;
+  }
+  
   public void setColor(color nc) {
     c = nc;
   }
@@ -423,7 +431,7 @@ void setup() {
   gridHeight = height/gm;
   
   init();
-  noLoop();
+  //noLoop();
   //Separate board area and information display area. For debugging
   stroke(green);
   line(0, 12 * gridHeight, width, 12 * gridHeight);
@@ -439,7 +447,6 @@ void drawMartians() {
   martianInitialHeight = 6;
   //Calculate height of the first line of martians
   stepY = n + martianInitialHeight;
-  print(stepY);
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
       pushMatrix();
@@ -485,14 +492,15 @@ void drawBarracks() {
 
 void drawCannon() {
   int cannonInitialHeight;
-  cannonInitialHeight = 175;
+  cannonInitialHeight = 180;
   pushMatrix();
-    translate(0, cannonInitialHeight * gridHeight);
+    translate((initialCoordinate) * gridWidth, cannonInitialHeight * gridHeight);
     cannon.drawCannon();
   popMatrix();
 }
 
 void draw() {
+  background(black);
   drawMartians();
   drawSaucer();
   drawBarracks();
