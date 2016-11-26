@@ -441,7 +441,21 @@ void drawMartians() {
   }
 }
 
+void drawSaucer() {
+  int h;
+  int stepY;
+  int saucerInitialHieght;
+  saucerInitialHieght = 7;
+  h = saucer.getN();
+  stepY = h + saucerInitialHieght;
+  pushMatrix();
+    translate(0, stepY * gridHeight);
+    saucer.drawSaucer();
+  popMatrix();
+}
+
 void draw() {
   drawMartians();
+  drawSaucer();
   drawLine();
 }
