@@ -269,6 +269,14 @@ class Barrack {
     return c;
   }
   
+  public int getM() {
+    return m;
+  }
+  
+  public int getN() {
+    return n;
+  }
+  
   public void drawBarrack() {
     fill(c);
     drawMatrix(barrack, n, m, gridSizeX, gridSizeY);
