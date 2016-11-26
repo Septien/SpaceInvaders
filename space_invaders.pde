@@ -510,3 +510,19 @@ void draw() {
   drawCannon();
   drawLine();
 }
+
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == LEFT) {
+      cannonTranslate -= 1;
+      if (cannonTranslate <= -initialCoordinate)
+        cannonTranslate = -initialCoordinate;
+    }
+    else if (keyCode == RIGHT) {
+      int m = cannon.getM();
+      cannonTranslate += 1;
+      if (cannonTranslate >= gn - 23 - m)
+        cannonTranslate = gn - 23 - m;
+    }
+  }
+}
