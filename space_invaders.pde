@@ -466,8 +466,26 @@ void drawSaucer() {
   popMatrix();
 }
 
+void drawBarracks() {
+  int barrackInitialHeight;
+  int i;
+  int barrackWidth;
+  int barrackSeparation;
+  barrackSeparation = 21;
+  barrackWidth = barracks[0].getM();
+  barrackInitialHeight = 150;
+  for (i = 0; i < numBarracks; i++) {
+    pushMatrix();
+      translate(0, barrackInitialHeight * gridHeight);
+      translate((initialCoordinate + ((barrackWidth + barrackSeparation) * i)) * gridWidth, 0);
+      barracks[i].drawBarrack();
+    popMatrix();
+  }
+}
+
 void draw() {
   drawMartians();
   drawSaucer();
   drawLine();
+  drawBarracks();
 }
