@@ -1,5 +1,3 @@
-final int moveOne = 1;
-final int moveTwo = 2;
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
 final color white = color(255);
@@ -48,7 +46,7 @@ class Martian {
   //Appears on the board
   private boolean alive;
   //In wich movement is the martian now
-  private int movement;
+  private boolean moveOne;
   //Size of the matrix
   private int n;
   private int m;
@@ -62,7 +60,7 @@ class Martian {
     alive = true;
     gridSizeX = gSx;
     gridSizeY = gSy;
-    movement = moveOne;
+    moveOne = true;
     c = white;
   }
   
@@ -125,8 +123,8 @@ class Martian {
       return m;
   }
   
-  public void setMovement(int move) {
-    movement = move;
+  public void setMovement(boolean move) {
+    moveOne = move;
   }
   
   public void drawMartian() {
@@ -135,7 +133,7 @@ class Martian {
 
     fill(c);
     noStroke();
-    if (movement == moveOne)
+    if (moveOne)
       drawMatrix(move1, n, m, gridSizeX, gridSizeY);
     else
       drawMatrix(move2, n, m, gridSizeX, gridSizeY);
