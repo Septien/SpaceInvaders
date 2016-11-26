@@ -483,9 +483,19 @@ void drawBarracks() {
   }
 }
 
+void drawCannon() {
+  int cannonInitialHeight;
+  cannonInitialHeight = 175;
+  pushMatrix();
+    translate(0, cannonInitialHeight * gridHeight);
+    cannon.drawCannon();
+  popMatrix();
+}
+
 void draw() {
   drawMartians();
   drawSaucer();
-  drawLine();
   drawBarracks();
+  drawCannon();
+  drawLine();
 }
