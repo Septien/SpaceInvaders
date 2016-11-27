@@ -390,9 +390,9 @@ class cannonBullet {
     fill(c);
     noStroke();
     rect(x * gridSizeX, y * gridSizeY, gridSizeX, gridSizeY);
-    rect(x * gridSizeX, (y + 1) * gridSizeY, gridSizeX, gridSizeY);
-    rect(x * gridSizeX, (y + 2) * gridSizeY, gridSizeX, gridSizeY);
-    rect(x * gridSizeX, (y + 3) * gridSizeY, gridSizeX, gridSizeY);
+    rect(x * gridSizeX, (y - 1) * gridSizeY, gridSizeX, gridSizeY);
+    rect(x * gridSizeX, (y - 2) * gridSizeY, gridSizeX, gridSizeY);
+    rect(x * gridSizeX, (y - 3) * gridSizeY, gridSizeX, gridSizeY);
   }
 }
 
@@ -558,15 +558,13 @@ void drawCannon() {
 }
 
 void drawBullet() {
-  int cannonHeight;
   int cannonWidth;
   int bulletXInitialCoordinate;
   int bulletYInitialCoordinate;
-  cannonHeight = cannon.getN();
   cannonWidth = cannon.getM();
   //Calculate x initial of coordinate based on the current position of the cannon, plus half the width of it 
   bulletXInitialCoordinate = initialCoordinate + cannonTranslate + (cannonWidth / 2);
-  bulletYInitialCoordinate = cannonInitialHeight - cannonHeight;
+  bulletYInitialCoordinate = cannonInitialHeight - 1;
   
   pushMatrix();
     translate(bulletXInitialCoordinate * gridWidth, bulletYInitialCoordinate  * gridHeight);
