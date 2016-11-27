@@ -421,6 +421,11 @@ int initialCoordinate = 23;
 int cannonTranslate = 0;
 //Initial height of cannon
 int cannonInitialHeight = 180;
+//Intial coordinates of the bullet
+int bulletXInitialCoordinate;
+int bulletYInitialCoordinate;
+//Able to shoot?
+boolean shoot = false;
 
 
 /**
@@ -558,18 +563,16 @@ void drawCannon() {
 }
 
 void drawBullet() {
-  int cannonWidth;
-  int bulletXInitialCoordinate;
-  int bulletYInitialCoordinate;
-  cannonWidth = cannon.getM();
-  //Calculate x initial of coordinate based on the current position of the cannon, plus half the width of it 
-  bulletXInitialCoordinate = initialCoordinate + cannonTranslate + (cannonWidth / 2);
-  bulletYInitialCoordinate = cannonInitialHeight - 1;
-  
   pushMatrix();
     translate(bulletXInitialCoordinate * gridWidth, bulletYInitialCoordinate  * gridHeight);
     bullet.drawBullet();
   popMatrix();
+}
+
+void shootBullet() {
+  if (shoot)
+    drawBullet();
+  return;
 }
 
 void draw() {
@@ -598,6 +601,17 @@ void keyPressed() {
     }
   }
   else if (key == ' ') {
-    
+    //Bullet already on board
+    if (bullet.exist()) {
+      shoot = false;
+      return;
+    }
+    int cannonWidth;
+    cannonWidth = cannon.getM();
+    //Calculate x initial of coordinate based on the current position of the cannon, plus half the width of it 
+    bulletXInitialCoordinate = initialCoordinate + cannonTranslate + (cannonWidth / 2);
+    //Draw bullet 1 'pixel' above the cannon
+    bulletYInitialCoordinate = cannonInitialHeight - 1;
+    shoot = true;
   }
 }
