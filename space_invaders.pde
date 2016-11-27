@@ -387,6 +387,8 @@ class cannonBullet {
   }
   
   public void drawBullet() {
+    fill(c);
+    noStroke();
     rect(x * gridSizeX, y * gridSizeY, gridSizeX, gridSizeY);
     rect(x * gridSizeX, (y + 1) * gridSizeY, gridSizeX, gridSizeY);
     rect(x * gridSizeX, (y + 2) * gridSizeY, gridSizeX, gridSizeY);
@@ -399,6 +401,7 @@ Martian[][] martians;
 Saucer saucer;
 Barrack[] barracks;
 Cannon cannon;
+cannonBullet bullet;
 //Number of squares on x-axis
 int gn = 200;
 //Number of squares on y-axis
@@ -416,6 +419,8 @@ int gridHeight;
 int initialCoordinate = 23;
 //Cannon translate coordinate
 int cannonTranslate = 0;
+//Initial height of cannon
+int cannonInitialHeight = 180;
 
 
 /**
@@ -478,6 +483,8 @@ void setup() {
   
   gridWidth = width/gn;
   gridHeight = height/gm;
+  
+  bullet = new cannonBullet(0, 0, gridWidth, gridHeight);
   
   init();
   //noLoop();
@@ -544,21 +551,38 @@ void drawBarracks() {
 }
 
 void drawCannon() {
-  int cannonInitialHeight;
-  cannonInitialHeight = 180;
   pushMatrix();
     translate((initialCoordinate + cannonTranslate) * gridWidth, cannonInitialHeight * gridHeight);
     cannon.drawCannon();
   popMatrix();
 }
 
+void drawBullet() {
+  int cannonHeight;
+  int cannonWidth;
+  int bulletXInitialCoordinate;
+  int bulletYInitialCoordinate;
+  cannonHeight = cannon.getN();
+  cannonWidth = cannon.getM();
+  //Calculate x initial of coordinate based on the current position of the cannon, plus half the width of it 
+  bulletXInitialCoordinate = initialCoordinate + cannonTranslate + (cannonWidth / 2);
+  bulletYInitialCoordinate = cannonInitialHeight - cannonHeight;
+  
+  pushMatrix();
+    translate(bulletXInitialCoordinate * gridWidth, bulletYInitialCoordinate  * gridHeight);
+    bullet.drawBullet();
+  popMatrix();
+}
+
 void draw() {
   background(black);
+  drawLine();
+  noStroke();
   drawMartians();
   drawSaucer();
   drawBarracks();
   drawCannon();
-  drawLine();
+  drawBullet();
 }
 
 void keyPressed() {
