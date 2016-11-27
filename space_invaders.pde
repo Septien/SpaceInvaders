@@ -381,6 +381,11 @@ class cannonBullet {
     return exist;
   }
   
+  //Indicate bullet is on board
+  public void setExistance(boolean alive) {
+    exist = alive;
+  }
+  
   //The bullet is no more
   public void destroy() {
     exist = false;
@@ -583,7 +588,7 @@ void draw() {
   drawSaucer();
   drawBarracks();
   drawCannon();
-  drawBullet();
+  shootBullet();
 }
 
 void keyPressed() {
@@ -604,6 +609,7 @@ void keyPressed() {
     //Bullet already on board
     if (bullet.exist()) {
       shoot = false;
+      bullet.setExistance(false);
       return;
     }
     int cannonWidth;
@@ -612,6 +618,7 @@ void keyPressed() {
     bulletXInitialCoordinate = initialCoordinate + cannonTranslate + (cannonWidth / 2);
     //Draw bullet 1 'pixel' above the cannon
     bulletYInitialCoordinate = cannonInitialHeight - 1;
+    bullet.setExistance(true);
     shoot = true;
   }
 }
