@@ -365,7 +365,7 @@ class cannonBullet {
     gridSizeX = gSx;
     gridSizeY = gSy;
     c = white;
-    exist = true;
+    exist = false;
   }
   
   public color getColor() {
