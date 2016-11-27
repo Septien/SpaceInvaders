@@ -350,6 +350,50 @@ class Cannon {
   }
 }
 
+class cannonBullet {
+  //Initial coordinate, when shooted
+  private int x;
+  private int y;
+  private int gridSizeX;
+  private int gridSizeY;
+  private boolean exist;
+  color c;
+  
+  cannonBullet(int nX, int nY, int gSx, int gSy) {
+    x = nX;
+    y = nY;
+    gridSizeX = gSx;
+    gridSizeY = gSy;
+    c = white;
+    exist = true;
+  }
+  
+  public color getColor() {
+    return c;
+  }
+  
+  public void setColor(color nC) {
+    c = nC;
+  }
+  
+  //Is bullet still on board?
+  public boolean exist() {
+    return exist;
+  }
+  
+  //The bullet is no more
+  public void destroy() {
+    exist = false;
+  }
+  
+  public void drawBullet() {
+    rect(x * gridSizeX, y * gridSizeY, gridSizeX, gridSizeY);
+    rect(x * gridSizeX, (y + 1) * gridSizeY, gridSizeX, gridSizeY);
+    rect(x * gridSizeX, (y + 2) * gridSizeY, gridSizeX, gridSizeY);
+    rect(x * gridSizeX, (y + 3) * gridSizeY, gridSizeX, gridSizeY);
+  }
+}
+
 //Necesary objects and variables.
 Martian[][] martians;
 Saucer saucer;
@@ -530,5 +574,8 @@ void keyPressed() {
       if (cannonTranslate >= gn - 23 - m)
         cannonTranslate = gn - 23 - m;
     }
+  }
+  else if (key == ' ') {
+    
   }
 }
