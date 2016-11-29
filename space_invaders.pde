@@ -419,6 +419,7 @@ SoundFile martianShoot;
 SoundFile explosion;
 SoundFile saucersound;
 SoundFile saucersound1;
+int sound = 1;
 //Number of squares on x-axis
 int gn = 200;
 //Number of squares on y-axis
@@ -448,6 +449,8 @@ int bulletXInitialCoordinate;
 int bulletYInitialCoordinate;
 //Able to shoot?
 boolean shoot = false;
+//Bullet displacement
+int bulletYDisplacement = 0;
 
 
 /**
@@ -505,10 +508,10 @@ void drawLine() {
 }
 
 void initSound() {
-  invaders1 = new SoundFile(this, "fastinvader1.wav");
-  invaders2 = new SoundFile(this, "fastinvader2.wav");
-  invaders3 = new SoundFile(this, "fastinvader3.wav");
-  invaders4 = new SoundFile(this, "fastinvader4.wav");
+  invaders1 = new SoundFile(this, "0.wav");
+  invaders2 = new SoundFile(this, "1.wav");
+  invaders3 = new SoundFile(this, "2.wav");
+  invaders4 = new SoundFile(this, "3.wav");
   cannonShoot = new SoundFile(this, "invaderkilled.wav");
   martianShoot = new SoundFile(this, "shoot.wav");
   explosion = new SoundFile(this, "explosion.wav");
@@ -573,6 +576,27 @@ int getRightmostColumn() {
   return index;
 }
 
+void martianSound() {
+  switch(sound) {
+    case 1:
+      invaders1.play();
+      sound = 2;
+      break;
+    case 2:
+      invaders2.play();
+      sound = 3;
+      break;
+    case 3:
+      invaders3.play();
+      sound = 4;
+      break;
+    case 4:
+      invaders4.play();
+      sound = 1;
+      break;
+  }
+}
+
 void drawMartians() {
   int i, j;
   int n, m;
@@ -619,10 +643,11 @@ void drawMartians() {
       numMartians = countMartians;
     countMartians = 0;
   }
-  
+
   //m -> width of martians
   //println(((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth);
   if (millis >= 0 && millis <= 15) {
+    martianSound();
     if (((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth >= width) {
       xDisplacement *= -1;
       martianYDisplacement += yDisplacement;
@@ -673,9 +698,16 @@ void drawCannon() {
 
 void drawBullet() {
   pushMatrix();
+    translate(0, -bulletYDisplacement);
     translate(bulletXInitialCoordinate * gridWidth, bulletYInitialCoordinate  * gridHeight);
     bullet.drawBullet();
   popMatrix();
+  bulletYDisplacement += 10;
+  if (bulletYDisplacement == 500) {
+    bullet.setExistance(false);
+    bulletYDisplacement = 0;
+    shoot = false;
+  }
 }
 
 void shootBullet() {
@@ -712,8 +744,6 @@ void keyPressed() {
   else if (key == ' ') {
     //Bullet already on board
     if (bullet.exist()) {
-      shoot = false;
-      bullet.setExistance(false);
       return;
     }
     int cannonWidth;
@@ -724,5 +754,6 @@ void keyPressed() {
     bulletYInitialCoordinate = cannonInitialHeight - 1;
     bullet.setExistance(true);
     shoot = true;
+    cannonShoot.play();
   }
 }
