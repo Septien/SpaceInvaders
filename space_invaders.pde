@@ -528,6 +528,26 @@ int getLeftmostColumn() {
   return index;
 }
 
+/**
+  Calculate the index of the rightmost column.
+*/
+int getRightmostColumn() {
+  int i, j;
+  int index;
+  int countMartiansOnColumn;
+  index = martianColumn - 1;
+  countMartiansOnColumn = 0;
+  
+  for (j = martianColumn - 1; j >= 0; j--) {
+    for (i = martianRow - 1; i >= 0; i--)
+      if (martians[i][j].isAlive())
+        countMartiansOnColumn++;
+    if (countMartiansOnColumn == 0)
+      index = j - 1;
+  }
+  return index;
+}
+
 void drawMartians() {
   int i, j;
   int n, m;
@@ -539,6 +559,7 @@ void drawMartians() {
   int countMartians;
   //Leftmost column
   int leftmostColumn;
+  int rightmostColumn;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianInitialHeight = 6;
@@ -548,6 +569,7 @@ void drawMartians() {
   numMartians = martianColumn;
   countMartians = 0;
   leftmostColumn = getLeftmostColumn();
+  rightmostColumn = getRightmostColumn();
   //Move martians in x axis
   if (millis >= 0 && millis <= 15)
      martianXDisplacement += xDisplacement;
