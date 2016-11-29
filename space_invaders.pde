@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
 final color white = color(255);
@@ -407,6 +409,16 @@ Saucer saucer;
 Barrack[] barracks;
 Cannon cannon;
 cannonBullet bullet;
+//File for the sound
+SoundFile invaders1;
+SoundFile invaders2;
+SoundFile invaders3;
+SoundFile invaders4;
+SoundFile cannonShoot;
+SoundFile martianShoot;
+SoundFile explosion;
+SoundFile saucersound;
+SoundFile saucersound1;
 //Number of squares on x-axis
 int gn = 200;
 //Number of squares on y-axis
@@ -492,6 +504,18 @@ void drawLine() {
   line(0, (gm - 1) * gridHeight, width, (gm - 1) * gridHeight);
 }
 
+void initSound() {
+  invaders1 = new SoundFile(this, "fastinvader1.wav");
+  invaders2 = new SoundFile(this, "fastinvader2.wav");
+  invaders3 = new SoundFile(this, "fastinvader3.wav");
+  invaders4 = new SoundFile(this, "fastinvader4.wav");
+  cannonShoot = new SoundFile(this, "invaderkilled.wav");
+  martianShoot = new SoundFile(this, "shoot.wav");
+  explosion = new SoundFile(this, "explosion.wav");
+  saucersound = new SoundFile(this, "ufo_highpitch.wav");
+  saucersound1 = new SoundFile(this, "ufo_lowpitch.wav");
+}
+
 void setup() {
   background(black);
   size(600, 600);
@@ -502,6 +526,7 @@ void setup() {
   bullet = new cannonBullet(0, 0, gridWidth, gridHeight);
   
   init();
+  initSound();
   //noLoop();
   //Separate board area and information display area. For debugging
   stroke(green);
