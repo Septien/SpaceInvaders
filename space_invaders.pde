@@ -451,7 +451,8 @@ int bulletYInitialCoordinate;
 boolean shoot = false;
 //Bullet displacement
 int bulletYDisplacement = 0;
-
+boolean saucerMove = true;
+int saucerDisplacement = 0;
 
 /**
 Initialize the array of martians.
@@ -667,9 +668,17 @@ void drawSaucer() {
   h = saucer.getN();
   stepY = h + saucerInitialHieght;
   pushMatrix();
+    translate(saucerDisplacement, 0);
     translate(0, stepY * gridHeight);
     saucer.drawSaucer();
   popMatrix();
+  saucerDisplacement += 2;
+  //saucersound1.play();
+}
+
+void moveSaucer() {
+  if (saucerMove)
+    drawSaucer();
 }
 
 void drawBarracks() {
@@ -721,7 +730,7 @@ void draw() {
   drawLine();
   noStroke();
   drawMartians();
-  drawSaucer();
+  moveSaucer();
   drawBarracks();
   drawCannon();
   shootBullet();
@@ -730,13 +739,13 @@ void draw() {
 void keyPressed() {
   if (key == CODED) {
     if (keyCode == LEFT) {
-      cannonTranslate -= 1;
+      cannonTranslate -= 5;
       if (cannonTranslate <= -initialCoordinate)
         cannonTranslate = -initialCoordinate;
     }
     else if (keyCode == RIGHT) {
       int m = cannon.getM();
-      cannonTranslate += 1;
+      cannonTranslate += 5;
       if (cannonTranslate >= gn - 23 - m)
         cannonTranslate = gn - 23 - m;
     }
