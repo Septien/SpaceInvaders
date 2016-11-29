@@ -508,6 +508,26 @@ void setup() {
   line(0, 12 * gridHeight, width, 12 * gridHeight);
 }
 
+/**
+  Calculate and returns the index of the leftmost column.
+*/
+int getLeftmostColumn() {
+  int i, j;
+  int index;
+  int countMartiansOnColumn;
+  countMartiansOnColumn = 0;
+  index = 0;
+  for (j = 0; j < martianColumn; j++) {
+    for (i = 0; i < martianRow; i++) {
+      if (martians[i][j].isAlive())
+        countMartiansOnColumn++;
+    }
+    if (countMartiansOnColumn == 0)
+      index = j + 1;
+  }
+  return index;
+}
+
 void drawMartians() {
   int i, j;
   int n, m;
@@ -527,7 +547,7 @@ void drawMartians() {
   stepY = n + martianInitialHeight;
   numMartians = martianColumn;
   countMartians = 0;
-  leftmostColumn = 0;
+  leftmostColumn = getLeftmostColumn();
   //Move martians in x axis
   if (millis >= 0 && millis <= 15)
      martianXDisplacement += xDisplacement;
