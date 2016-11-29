@@ -414,6 +414,11 @@ int gm = 200;
 //Number of columns and rows of martians
 int martianRow = 5;
 int martianColumn = 11;
+//
+int martianXDisplacement = 0;
+int martianYDisplacement = 0;
+int xDisplacement = 2;
+int yDisplacement = 5;
 //Number of barracks
 int numBarracks = 4;
 //Width of grid
@@ -509,23 +514,55 @@ void drawMartians() {
   int stepY;
   int martianInitialHeight;
   int millis;
+  //Maximum number of martians in a row 
+  int numMartians;
+  int countMartians;
+  //Leftmost column
+  int leftmostColumn;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianInitialHeight = 6;
   millis = millis() % 1000;
   //Calculate height of the first line of martians
   stepY = n + martianInitialHeight;
+  numMartians = martianColumn;
+  countMartians = 0;
+  leftmostColumn = 0;
+  //Move martians in x axis
+  if (millis >= 0 && millis <= 15)
+     martianXDisplacement += xDisplacement;
+  //Display matrix of martians  
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
       if (millis >= 0 && millis <= 15)
         martians[i][j].setMove(!martians[i][j].getMove());
       pushMatrix();
+        translate(martianXDisplacement * gridWidth, martianYDisplacement * gridHeight);
         //Draw each line of martians according to the line they belong to.
         translate(0, i * stepY * gridHeight);
         //Draw each martian of a line with its corresponding separation
         translate((initialCoordinate + (m * j)) * gridWidth, initialCoordinate * gridHeight);
         martians[i][j].drawMartian();
       popMatrix();
+      if (martians[i][j].isAlive())
+        countMartians++;
+    }
+
+    if (countMartians < numMartians)
+      numMartians = countMartians;
+    countMartians = 0;
+  }
+  
+  //m -> width of martians
+  //println(((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth);
+  if (millis >= 0 && millis <= 15) {
+    if (((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth >= width) {
+      xDisplacement *= -1;
+      martianYDisplacement += yDisplacement;
+    }
+    if ((martianXDisplacement + initialCoordinate + (leftmostColumn * m)) * gridWidth <= 0) {
+      xDisplacement *= -1;
+      martianYDisplacement += yDisplacement;
     }
   }
 }
