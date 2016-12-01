@@ -132,7 +132,7 @@ class Martian {
   
   Martian(String martianFile1, String martianFile2) {
     n = loadN(martianFile1);
-    m = loadN(martianFile1);
+    m = loadM(martianFile1);
     move1 = new int[n][m];
     move2 = new int[n][m];
     loadMatrixFromFile(martianFile1, move1);
@@ -201,7 +201,7 @@ class Saucer {
   
   Saucer(String file) {
     n = loadN(file);
-    m = loadN(file);
+    m = loadM(file);
     saucer = new int[n][m];
     loadMatrixFromFile(file, saucer);
     c = red;
@@ -244,7 +244,7 @@ class Barrack {
   
   Barrack(String file) {
     n = loadN(file);
-    m = loadN(file);
+    m = loadM(file);
     barrack = new int[n][m];
     loadMatrixFromFile(file, barrack);
     //0% of damage
@@ -284,7 +284,7 @@ class Cannon {
   
   Cannon(String file) {
     n = loadN(file);
-    m = loadN(file);
+    m = loadM(file);
     cannon = new int[n][m];
     loadMatrixFromFile(file, cannon);
     //0% of damage
