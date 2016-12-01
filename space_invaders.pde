@@ -1,4 +1,9 @@
 import processing.sound.*;
+//Bullet displacement
+int bulletYDisplacement = 0;
+//Intial coordinates of the bullet
+int bulletXInitialCoordinate;
+int bulletYInitialCoordinate;
 
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
@@ -401,6 +406,14 @@ class cannonBullet {
     rect(x * gridSizeX, (y - 2) * gridSizeY, gridSizeX, gridSizeY);
     rect(x * gridSizeX, (y - 3) * gridSizeY, gridSizeX, gridSizeY);
   }
+  
+  public boolean collide(int cX1, int cY1, int cX2, int cY2) {
+    int yaux = bulletYInitialCoordinate - bulletYDisplacement - 3;
+    println(yaux);
+    if ((cX1 <= bulletXInitialCoordinate && bulletXInitialCoordinate <= cX2) && (cY1 <= yaux && yaux <= cY2))
+      return true;
+    return false;
+  }
 }
 
 //Necesary objects and variables.
@@ -444,13 +457,8 @@ int initialCoordinate = 23;
 int cannonTranslate = 0;
 //Initial height of cannon
 int cannonInitialHeight = 180;
-//Intial coordinates of the bullet
-int bulletXInitialCoordinate;
-int bulletYInitialCoordinate;
 //Able to shoot?
 boolean shoot = false;
-//Bullet displacement
-int bulletYDisplacement = 0;
 boolean saucerMove = true;
 int saucerDisplacement = 0;
 
@@ -635,6 +643,12 @@ void drawMartians() {
         //Draw each martian of a line with its corresponding separation
         translate((initialCoordinate + (m * j)) * gridWidth, initialCoordinate * gridHeight);
         martians[i][j].drawMartian();
+        if (shoot) {
+          if (bullet.collide((martianXDisplacement + (initialCoordinate + (m * j))) * gridWidth, (martianYDisplacement + initialCoordinate + (i * stepY)) * gridHeight, (n + martianXDisplacement + (initialCoordinate + (m * j))) * gridWidth, (m + martianYDisplacement + initialCoordinate + (i * stepY)) * gridHeight)) {
+            martians[i][j].kill();
+            shoot = false;
+          }
+        }
       popMatrix();
       if (martians[i][j].isAlive())
         countMartians++;
