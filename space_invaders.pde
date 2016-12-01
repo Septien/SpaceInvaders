@@ -4,6 +4,17 @@ int bulletYDisplacement = 0;
 //Intial coordinates of the bullet
 int bulletXInitialCoordinate;
 int bulletYInitialCoordinate;
+//Number of squares on x-axis
+int gn = 200;
+//Number of squares on y-axis
+int gm = 200;
+//Width of grid
+int gridWidth;
+//Height of grid
+int gridHeight;
+//Width and height of each square in the grid
+int gridSizeX;
+int gridSizeY;
 
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
@@ -46,6 +57,66 @@ void drawMatrix(int[][] matrix, int n, int m, int gridSizeX, int gridSizeY) {
       }
 }
 
+void loadMatrixFromFile(String file, int[][] matrix) {
+  BufferedReader reader;
+  String line;
+  String[] l;
+  int i, j;
+  int n, m;
+  
+  //Open file
+  reader = createReader(file);
+  line = readNextLine(reader);
+  if (line != null) {
+      l = split(line, " ");
+      //Size of the matrix
+      n = int(l[0]);
+      m = int(l[1]);
+      //Read first matrix
+      for (i = 0; i < n; i++) {
+        line = readNextLine(reader);
+        if (line != null) {
+          l = split(line, " ");
+          //Fill the matrix with the content of the current line
+          for (j = 0; j < m; j++)
+            matrix[i][j] = int(l[j]);
+        }
+      }
+  }
+}
+
+int loadN(String file) {
+  BufferedReader reader;
+  String line;
+  String[] l;
+  int n = 0;
+  //Open file
+  reader = createReader(file);
+  line = readNextLine(reader);
+  if (line != null) {
+      l = split(line, " ");
+      //Size of the matrix
+      n = int(l[0]);
+  }
+  return n;
+}
+
+int loadM(String file) {
+  BufferedReader reader;
+  String line;
+  String[] l;
+  int m = 0;
+  //Open file
+  reader = createReader(file);
+  line = readNextLine(reader);
+  if (line != null) {
+      l = split(line, " ");
+      //Size of the matrix
+      m = int(l[1]);
+  }
+  return m;
+}
+
 class Martian {
   //States of the martian (position 1 or position 2)
   private int[][] move1;
@@ -57,57 +128,18 @@ class Martian {
   //Size of the matrix
   private int n;
   private int m;
-  //Size of each square
-  private int gridSizeX;
-  private int gridSizeY;
   private color c;
   
-  Martian(String martianFile, int gSx, int gSy) {
-    loadMartianMatrix(martianFile);
+  Martian(String martianFile1, String martianFile2) {
+    n = loadN(martianFile1);
+    m = loadN(martianFile1);
+    move1 = new int[n][m];
+    move2 = new int[n][m];
+    loadMatrixFromFile(martianFile1, move1);
+    loadMatrixFromFile(martianFile2, move2);
     alive = true;
-    gridSizeX = gSx;
-    gridSizeY = gSy;
     moveOne = true;
     c = white;
-  }
-  
-  private void loadMartianMatrix(String martian) {
-    BufferedReader reader;
-    String line;
-    String[] l;
-    int i, j;
-  
-    //Open file
-    reader = createReader(martian);
-    line = readNextLine(reader);
-    if (line != null) {
-      l = split(line, " ");
-      //Size of the matrix
-      n = int(l[0]);
-      m = int(l[1]);
-      move1 = new int[n][m];
-      move2 = new int[n][m];
-      //Read first matrix
-      for (i = 0; i < n; i++) {
-        line = readNextLine(reader);
-        if (line != null) {
-          l = split(line, " ");
-          //Fill the matrix with the content of the current line
-          for (j = 0; j < m; j++)
-            move1[i][j] = int(l[j]);
-        }
-      }
-      line = readNextLine(reader);
-      //Read next matrix
-      for (i = 0; i < n; i++) {
-        line = readNextLine(reader);
-        if (line != null) {
-          l = split(line, " "); 
-          for (j = 0; j < m; j++)
-            move2[i][j] = int(l[j]);
-        }
-      }
-    }
   }
   
   public void setColor(color nc) {
@@ -164,15 +196,14 @@ class Saucer {
   private int m;
   //Array of posible points
   private int[] points;
-  private int gridSizeX;
-  private int gridSizeY;
   //Color of saucer
   private color c;
   
-  Saucer(String file, int gSx, int gSy) {
-    loadSaucerMatrix(file);
-    gridSizeX = gSx;
-    gridSizeY = gSy;
+  Saucer(String file) {
+    n = loadN(file);
+    m = loadN(file);
+    saucer = new int[n][m];
+    loadMatrixFromFile(file, saucer);
     c = red;
     points = new int[4];
     //Range of points 
@@ -188,30 +219,6 @@ class Saucer {
   
   public int getM() {
     return m;
-  }
-  
-  private void loadSaucerMatrix(String suacer) {
-    BufferedReader reader;
-    String line;
-    String[] l;
-    int i, j;
-  
-    reader = createReader(suacer);
-    line = readNextLine(reader);
-    if (line != null) {
-      l = split(line, " ");
-      n = int(l[0]);
-      m = int(l[1]);
-      saucer = new int[n][m];
-      for (i = 0; i < n; i++) {
-        line = readNextLine(reader);
-        if (line != null) {
-          l = split(line, " "); 
-          for (j = 0; j < m; j++)
-            saucer[i][j] = int(l[j]);
-        }
-      }
-    }
   }
   
   public void setColor(color nc) {
@@ -233,41 +240,16 @@ class Barrack {
   private int n;
   private int m;
   private int damage;
-  private int gridSizeX;
-  private int gridSizeY;
   private color c;
   
-  Barrack(String file, int gSx, int gSy) {
-    loadBarrackMatrix(file);
-    gridSizeX = gSx;
-    gridSizeY = gSy;
+  Barrack(String file) {
+    n = loadN(file);
+    m = loadN(file);
+    barrack = new int[n][m];
+    loadMatrixFromFile(file, barrack);
     //0% of damage
     damage = 0;
     c = green;
-  }
-  
-  private void loadBarrackMatrix(String barrackFile) {
-    BufferedReader reader;
-    String line;
-    String[] l;
-    int i, j;
-  
-    reader = createReader(barrackFile);
-    line = readNextLine(reader);
-    if (line != null) {
-      l = split(line, " ");
-      n = int(l[0]);
-      m = int(l[1]);
-      barrack = new int[n][m];
-      for (i = 0; i < n; i++) {
-        line = readNextLine(reader);
-        if (line != null) {
-          l = split(line, " "); 
-          for (j = 0; j < m; j++)
-            barrack[i][j] = int(l[j]);
-        }
-      }
-    }
   }
   
   public void setColor(color nc) {
@@ -298,41 +280,16 @@ class Cannon {
   private int m;
   //Number of available lives
   private int lives;
-  private int gridSizeX;
-  private int gridSizeY;
   private color c;
   
-  Cannon(String file, int gSx, int gSy) {
-    loadCannonMatrix(file);
-    gridSizeX = gSx;
-    gridSizeY = gSy;
+  Cannon(String file) {
+    n = loadN(file);
+    m = loadN(file);
+    cannon = new int[n][m];
+    loadMatrixFromFile(file, cannon);
     //0% of damage
     lives = 3;
     c = green;
-  }
-  
-  private void loadCannonMatrix(String barrackFile) {
-    BufferedReader reader;
-    String line;
-    String[] l;
-    int i, j;
-  
-    reader = createReader(barrackFile);
-    line = readNextLine(reader);
-    if (line != null) {
-      l = split(line, " ");
-      n = int(l[0]);
-      m = int(l[1]);
-      cannon = new int[n][m];
-      for (i = 0; i < n; i++) {
-        line = readNextLine(reader);
-        if (line != null) {
-          l = split(line, " "); 
-          for (j = 0; j < m; j++)
-            cannon[i][j] = int(l[j]);
-        }
-      }
-    }
   }
   
   public int getM() {
@@ -361,16 +318,12 @@ class cannonBullet {
   //Initial coordinate, when shooted
   private int x;
   private int y;
-  private int gridSizeX;
-  private int gridSizeY;
   private boolean exist;
   color c;
   
-  cannonBullet(int nX, int nY, int gSx, int gSy) {
+  cannonBullet(int nX, int nY) {
     x = nX;
     y = nY;
-    gridSizeX = gSx;
-    gridSizeY = gSy;
     c = white;
     exist = false;
   }
@@ -433,10 +386,6 @@ SoundFile explosion;
 SoundFile saucersound;
 SoundFile saucersound1;
 int sound = 1;
-//Number of squares on x-axis
-int gn = 200;
-//Number of squares on y-axis
-int gm = 200;
 //Number of columns and rows of martians
 int martianRow = 5;
 int martianColumn = 11;
@@ -447,10 +396,7 @@ int xDisplacement = 2;
 int yDisplacement = 5;
 //Number of barracks
 int numBarracks = 4;
-//Width of grid
-int gridWidth;
-//Height of grid
-int gridHeight;
+
 //Initial points
 int initialCoordinate = 23;
 //Cannon translate coordinate
@@ -475,17 +421,17 @@ void initializeMartians(int gridWidth, int gridHeight) {
       switch (i) {
         //Load martians number 3
         case 0:
-          martians[i][j] = new Martian("martians/martian3.txt", gridWidth, gridHeight);
+          martians[i][j] = new Martian("martians/martian3.1.txt", "martians/martian3.2.txt");
           break;
         //Load the martian number 2
         case 1:
         case 2:
-          martians[i][j] = new Martian("martians/martian2.txt", gridWidth, gridHeight);
+          martians[i][j] = new Martian("martians/martian2.1.txt", "martians/martian2.2.txt");
           break;
         //Load martian number 1
         case 3:
         case 4:
-          martians[i][j] = new Martian("martians/martian1.txt", gridWidth, gridHeight);
+          martians[i][j] = new Martian("martians/martian1.1.txt", "martians/martian1.2.txt");
           break;
       }
     }
@@ -499,16 +445,16 @@ void init() {
   initializeMartians(gridWidth, gridHeight);
   
   //Initialize saucer
-  saucer = new Saucer("martians/saucer.txt", gridWidth, gridHeight);
+  saucer = new Saucer("martians/saucer.txt");
   
   //Initialize barracks
   barracks = new Barrack[numBarracks];
   for (i = 0; i < numBarracks; i++) {
-    barracks[i] = new Barrack("barracks/barrack.txt", gridWidth, gridHeight);
+    barracks[i] = new Barrack("barracks/barrack.txt");
   }
   
   //Initialize cannon
-  cannon = new Cannon("cannon/cannon.txt", gridWidth, gridHeight);
+  cannon = new Cannon("cannon/cannon.txt");
 }
 
 void drawLine() {
@@ -535,7 +481,10 @@ void setup() {
   gridWidth = width/gn;
   gridHeight = height/gm;
   
-  bullet = new cannonBullet(0, 0, gridWidth, gridHeight);
+  gridSizeX = gridWidth;
+  gridSizeY = gridHeight;
+  
+  bullet = new cannonBullet(0, 0);
   
   init();
   initSound();
