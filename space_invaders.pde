@@ -129,6 +129,9 @@ class Martian {
   private int n;
   private int m;
   private color c;
+  //Initial coordinates
+  int x;
+  int y;
   
   Martian(String martianFile1, String martianFile2) {
     n = loadN(martianFile1);
@@ -140,6 +143,22 @@ class Martian {
     alive = true;
     moveOne = true;
     c = white;
+  }
+  
+  public void setX(int nX) {
+    x = nX;
+  }
+  
+  public void setY(int nY) {
+    y = nY;
+  }
+  
+  public int getX() {
+    return x;
+  }
+  
+  public int getY() {
+    return y;
   }
   
   public void setColor(color nc) {
@@ -198,6 +217,9 @@ class Saucer {
   private int[] points;
   //Color of saucer
   private color c;
+  //Initial coordinates
+  int x;
+  int y;
   
   Saucer(String file) {
     n = loadN(file);
@@ -211,6 +233,22 @@ class Saucer {
     points[1] = 100;
     points[2] = 150;
     points[3] = 300;
+  }
+  
+  public void setX(int nX) {
+    x = nX;
+  }
+  
+  public void setY(int nY) {
+    y = nY;
+  }
+  
+  public int getX() {
+    return x;
+  }
+  
+  public int getY() {
+    return y;
   }
   
   public int getN() {
@@ -241,6 +279,9 @@ class Barrack {
   private int m;
   private int damage;
   private color c;
+  //Initial coordinates
+  int x;
+  int y;
   
   Barrack(String file) {
     n = loadN(file);
@@ -250,6 +291,22 @@ class Barrack {
     //0% of damage
     damage = 0;
     c = green;
+  }
+  
+  public void setX(int nX) {
+    x = nX;
+  }
+  
+  public void setY(int nY) {
+    y = nY;
+  }
+  
+  public int getX() {
+    return x;
+  }
+  
+  public int getY() {
+    return y;
   }
   
   public void setColor(color nc) {
@@ -281,6 +338,9 @@ class Cannon {
   //Number of available lives
   private int lives;
   private color c;
+  //Initial coordinates
+  int x;
+  int y;
   
   Cannon(String file) {
     n = loadN(file);
@@ -290,6 +350,22 @@ class Cannon {
     //0% of damage
     lives = 3;
     c = green;
+  }
+  
+  public void setX(int nX) {
+    x = nX;
+  }
+  
+  public void setY(int nY) {
+    y = nY;
+  }
+  
+  public int getX() {
+    return x;
+  }
+  
+  public int getY() {
+    return y;
   }
   
   public int getM() {
@@ -326,6 +402,22 @@ class cannonBullet {
     y = nY;
     c = white;
     exist = false;
+  }
+  
+  public void setX(int nX) {
+    x = nX;
+  }
+  
+  public void setY(int nY) {
+    y = nY;
+  }
+  
+  public int getX() {
+    return x;
+  }
+  
+  public int getY() {
+    return y;
   }
   
   public color getColor() {
