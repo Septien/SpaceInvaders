@@ -15,6 +15,8 @@ int gridHeight;
 //Width and height of each square in the grid
 int gridSizeX;
 int gridSizeY;
+//Velocity of martians
+int velmarcians = 0;
 
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
@@ -638,14 +640,17 @@ void drawMartians() {
   //Maximum number of martians in a row 
   int numMartians;
   int countMartians;
+  int totalMartians = 0;
   //Leftmost column
   int leftmostColumn;
   int rightmostColumn;
   int x, y;
+  float vel = 0;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianInitialHeight = 6;
-  millis = millis() % 1000;
+  int mod = 1000 - velmarcians;
+  millis = millis() % mod;
   //Calculate height of the first line of martians
   stepY = n + martianInitialHeight;
   numMartians = martianColumn;
@@ -669,13 +674,17 @@ void drawMartians() {
         martians[i][j].drawMartian();
       popMatrix();
       if (martians[i][j].isAlive()) {
-        if (bullet.collide(x, y, x + (n * gridWidth), y + (m * gridHeight))) {
-          bullet.setExistance(false);
-          bulletYDisplacement = 0;
-          shoot = false;
-          martians[i][j].kill();
-        }
+        if (shoot)
+          if (bullet.collide(x, y, x + (n * gridWidth), y + (m * gridHeight))) {
+            bullet.setExistance(false);
+            bulletYDisplacement = 0;
+            shoot = false;
+            martians[i][j].kill();
+            if (totalMartians < 55)
+              velmarcians += 15;
+          }
         countMartians++;
+        totalMartians++;
       }
     }
 
@@ -684,18 +693,18 @@ void drawMartians() {
     countMartians = 0;
   }
 
-  println(rightmostColumn);
   //m -> width of martians
-  //println(((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth);
   if (millis >= 0 && millis <= 15) {
     martianSound();
     if (((rightmostColumn * m) + martianXDisplacement + initialCoordinate) * gridWidth >= width) {
       xDisplacement *= -1;
       martianYDisplacement += yDisplacement;
+      velmarcians += 50;
     }
     if ((martianXDisplacement + initialCoordinate + (leftmostColumn * m)) * gridWidth <= 0) {
       xDisplacement *= -1;
       martianYDisplacement += yDisplacement;
+      velmarcians += 50;
     }
   }
 }
