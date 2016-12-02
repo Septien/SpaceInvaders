@@ -551,6 +551,20 @@ void initSound() {
   explosion = new SoundFile(this, "explosion.wav");
   saucersound = new SoundFile(this, "ufo_highpitch.wav");
   saucersound1 = new SoundFile(this, "ufo_lowpitch.wav");
+  
+  invaders1.rate(0.2);
+  invaders1.amp(0.5);
+  invaders2.rate(0.2);
+  invaders2.amp(0.5);
+  invaders3.rate(0.2);
+  invaders3.amp(0.5);
+  invaders4.rate(0.2);
+  invaders4.amp(0.5);
+  cannonShoot.rate(0.25);
+  martianShoot.rate(0.25);
+  explosion.rate(0.25);
+  saucersound.rate(0.25);
+  saucersound1.rate(0.25);
 }
 
 void setup() {
@@ -687,6 +701,7 @@ void drawMartians() {
             bulletYDisplacement = 0;
             shoot = false;
             martians[i][j].kill();
+            saucersound.play();
             if (totalMartians < 55)
               velmarcians += 15;
           }
