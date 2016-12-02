@@ -17,6 +17,9 @@ int gridSizeX;
 int gridSizeY;
 //Velocity of martians
 int velmarcians = 0;
+//Timing
+int second;
+int prevSecond;
 
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
@@ -568,6 +571,8 @@ void setup() {
   //Separate board area and information display area. For debugging
   stroke(green);
   line(0, 12 * gridHeight, width, 12 * gridHeight);
+  second = second();
+  prevSecond = second;
 }
 
 /**
@@ -636,7 +641,6 @@ void drawMartians() {
   int n, m;
   int stepY;
   int martianInitialHeight;
-  int millis;
   //Maximum number of martians in a row 
   int numMartians;
   int countMartians;
@@ -645,25 +649,28 @@ void drawMartians() {
   int leftmostColumn;
   int rightmostColumn;
   int x, y;
-  float vel = 0;
+  boolean secondChanged = false;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianInitialHeight = 6;
-  int mod = 1000 - velmarcians;
-  millis = millis() % mod;
   //Calculate height of the first line of martians
   stepY = n + martianInitialHeight;
   numMartians = martianColumn;
   countMartians = 0;
   leftmostColumn = getLeftmostColumn();
   rightmostColumn = getRightmostColumn();
+  second = second();
+  if (second != prevSecond) {
+    prevSecond = second;
+    secondChanged = true;
+  }
   //Move martians in x axis
-  if (millis >= 0 && millis <= 15)
+  if (secondChanged)
      martianXDisplacement += xDisplacement;
   //Display matrix of martians  
   for (i = 0; i < martianRow; i++) {
     for (j = 0; j < martianColumn; j++) {
-      if (millis >= 0 && millis <= 15)
+      if (secondChanged)
         martians[i][j].setMove(!martians[i][j].getMove());
         x = (martianXDisplacement + (initialCoordinate + (m * j))) * gridWidth;
         y = (martianYDisplacement + (i * stepY) + initialCoordinate) * gridHeight;
@@ -694,7 +701,7 @@ void drawMartians() {
   }
 
   //m -> width of martians
-  if (millis >= 0 && millis <= 15) {
+  if (secondChanged) {
     martianSound();
     if (((rightmostColumn * m) + martianXDisplacement + initialCoordinate) * gridWidth >= width) {
       xDisplacement *= -1;
