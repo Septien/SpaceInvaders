@@ -129,9 +129,6 @@ class Martian {
   private int n;
   private int m;
   private color c;
-  //Initial coordinates
-  int x;
-  int y;
   
   Martian(String martianFile1, String martianFile2) {
     n = loadN(martianFile1);
@@ -143,22 +140,6 @@ class Martian {
     alive = true;
     moveOne = true;
     c = white;
-  }
-  
-  public void setX(int nX) {
-    x = nX;
-  }
-  
-  public void setY(int nY) {
-    y = nY;
-  }
-  
-  public int getX() {
-    return x;
-  }
-  
-  public int getY() {
-    return y;
   }
   
   public void setColor(color nc) {
@@ -504,7 +485,7 @@ int saucerDisplacement = 0;
 Initialize the array of martians.
 Load all pertinent data.
 */
-void initializeMartians(int gridWidth, int gridHeight) {
+void initializeMartians() {
   int i, j;
   
   martians = new Martian[martianRow][martianColumn];
