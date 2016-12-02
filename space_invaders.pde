@@ -438,7 +438,7 @@ class cannonBullet {
   public boolean collide(int mx, int my, int xn, int ym) {
     int by = (bulletYInitialCoordinate + 4) * gridHeight - bulletYDisplacement;
     int bx = bulletXInitialCoordinate * gridWidth;
-    if (mx <= bx && bx <= xn)
+    if (mx <= bx && bx <= xn + 3*gridWidth)
       if (by <= ym)
         return true;
     return false;
