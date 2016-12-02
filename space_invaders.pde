@@ -433,11 +433,12 @@ class cannonBullet {
     rect(x * gridSizeX, (y - 3) * gridSizeY, gridSizeX, gridSizeY);
   }
   
-  public boolean collide(int cX1, int cY1, int cX2, int cY2) {
-    int yaux = bulletYInitialCoordinate - bulletYDisplacement - 3;
-    println(yaux);
-    if ((cX1 <= bulletXInitialCoordinate && bulletXInitialCoordinate <= cX2) && (cY1 <= yaux && yaux <= cY2))
-      return true;
+  public boolean collide(int mx, int my, int xn, int ym) {
+    int by = (bulletYInitialCoordinate + 4) * gridHeight - bulletYDisplacement;
+    int bx = bulletXInitialCoordinate * gridWidth;
+    if (mx <= bx && bx <= xn)
+      if (by <= ym)
+        return true;
     return false;
   }
 }
@@ -515,7 +516,7 @@ void initializeMartians() {
 void init() {
   int i;
   //Initialize martians
-  initializeMartians(gridWidth, gridHeight);
+  initializeMartians();
   
   //Initialize saucer
   saucer = new Saucer("martians/saucer.txt");
@@ -594,7 +595,7 @@ int getRightmostColumn() {
   int i, j;
   int index;
   int countMartiansOnColumn;
-  index = martianColumn - 1;
+  index = martianColumn;
   countMartiansOnColumn = 0;
   
   for (j = martianColumn - 1; j >= 0; j--) {
@@ -602,7 +603,7 @@ int getRightmostColumn() {
       if (martians[i][j].isAlive())
         countMartiansOnColumn++;
     if (countMartiansOnColumn == 0)
-      index = j - 1;
+      index = j;
   }
   return index;
 }
@@ -640,6 +641,7 @@ void drawMartians() {
   //Leftmost column
   int leftmostColumn;
   int rightmostColumn;
+  int x, y;
   n = martians[0][0].getN();
   m = martians[0][0].getM();
   martianInitialHeight = 6;
@@ -658,22 +660,23 @@ void drawMartians() {
     for (j = 0; j < martianColumn; j++) {
       if (millis >= 0 && millis <= 15)
         martians[i][j].setMove(!martians[i][j].getMove());
+        x = (martianXDisplacement + (initialCoordinate + (m * j))) * gridWidth;
+        y = (martianYDisplacement + (i * stepY) + initialCoordinate) * gridHeight;
       pushMatrix();
-        translate(martianXDisplacement * gridWidth, martianYDisplacement * gridHeight);
         //Draw each line of martians according to the line they belong to.
-        translate(0, i * stepY * gridHeight);
         //Draw each martian of a line with its corresponding separation
-        translate((initialCoordinate + (m * j)) * gridWidth, initialCoordinate * gridHeight);
+        translate(x, y);
         martians[i][j].drawMartian();
-        if (shoot) {
-          if (bullet.collide((martianXDisplacement + (initialCoordinate + (m * j))) * gridWidth, (martianYDisplacement + initialCoordinate + (i * stepY)) * gridHeight, (n + martianXDisplacement + (initialCoordinate + (m * j))) * gridWidth, (m + martianYDisplacement + initialCoordinate + (i * stepY)) * gridHeight)) {
-            martians[i][j].kill();
-            shoot = false;
-          }
-        }
       popMatrix();
-      if (martians[i][j].isAlive())
+      if (martians[i][j].isAlive()) {
+        if (bullet.collide(x, y, x + (n * gridWidth), y + (m * gridHeight))) {
+          bullet.setExistance(false);
+          bulletYDisplacement = 0;
+          shoot = false;
+          martians[i][j].kill();
+        }
         countMartians++;
+      }
     }
 
     if (countMartians < numMartians)
@@ -681,11 +684,12 @@ void drawMartians() {
     countMartians = 0;
   }
 
+  println(rightmostColumn);
   //m -> width of martians
   //println(((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth);
   if (millis >= 0 && millis <= 15) {
     martianSound();
-    if (((numMartians * m) + martianXDisplacement + initialCoordinate) * gridWidth >= width) {
+    if (((rightmostColumn * m) + martianXDisplacement + initialCoordinate) * gridWidth >= width) {
       xDisplacement *= -1;
       martianYDisplacement += yDisplacement;
     }
