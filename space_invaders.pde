@@ -20,6 +20,9 @@ int velmarcians = 0;
 //Timing
 int second;
 int prevSecond;
+//Score variable
+int score = 0;
+
 
 final color green = color(0, 255, 0);
 final color red = color(255, 0, 0);
@@ -133,9 +136,10 @@ class Martian {
   //Size of the matrix
   private int n;
   private int m;
+  int score;
   private color c;
   
-  Martian(String martianFile1, String martianFile2) {
+  Martian(String martianFile1, String martianFile2, int s) {
     n = loadN(martianFile1);
     m = loadM(martianFile1);
     move1 = new int[n][m];
@@ -145,6 +149,7 @@ class Martian {
     alive = true;
     moveOne = true;
     c = white;
+    score = s;
   }
   
   public void setColor(color nc) {
@@ -165,6 +170,10 @@ class Martian {
   
   public int getM() {
       return m;
+  }
+  
+  public int getScore() {
+    return score;
   }
   
   public void setMove(boolean move) {
@@ -500,17 +509,17 @@ void initializeMartians() {
       switch (i) {
         //Load martians number 3
         case 0:
-          martians[i][j] = new Martian("martians/martian3.1.txt", "martians/martian3.2.txt");
+          martians[i][j] = new Martian("martians/martian3.1.txt", "martians/martian3.2.txt", 40);
           break;
         //Load the martian number 2
         case 1:
         case 2:
-          martians[i][j] = new Martian("martians/martian2.1.txt", "martians/martian2.2.txt");
+          martians[i][j] = new Martian("martians/martian2.1.txt", "martians/martian2.2.txt", 20);
           break;
         //Load martian number 1
         case 3:
         case 4:
-          martians[i][j] = new Martian("martians/martian1.1.txt", "martians/martian1.2.txt");
+          martians[i][j] = new Martian("martians/martian1.1.txt", "martians/martian1.2.txt", 10);
           break;
       }
     }
@@ -702,6 +711,7 @@ void drawMartians() {
             shoot = false;
             martians[i][j].kill();
             saucersound.play();
+            score += martians[i][j].getScore();
             if (totalMartians < 55)
               velmarcians += 15;
           }
